@@ -25,9 +25,11 @@ int partOne(const std::vector<int>& vec) {
       }
    }
 
+   // If no such pair found, return 1.
    return 1;
 }
 
+// Part Two: Find the trio which sums to 2020 and return their product.
 int partTwo(const std::vector<int>& vec) {
    int sum;
    for (size_t i = 0; i < vec.size(); i++) {
@@ -40,12 +42,12 @@ int partTwo(const std::vector<int>& vec) {
       }
    }
 
+   // If no such pair found, return 1.
    return 1;
 }
 
 
-int main()
-{
+int main() {
    std::ifstream in("../Inputs/DayOne.txt");
    std::string buf;
    std::vector<int> vec;
