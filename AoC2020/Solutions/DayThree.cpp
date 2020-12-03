@@ -34,7 +34,7 @@ int partTwo(const std::vector<std::vector<char>>& map) {
 
     // for some reason, this is returning an incorrect value. however, manual multiplication of the results is correct.
     // so, need to investigate this futher...maybe int isn't adequate?
-    int result;
+    int result = 1;
     for (auto& i : slopes) {
         result *= countTrees(map, i.first, i.second);
     }
