@@ -5,6 +5,7 @@
 #include <string>
 #include <list>
 
+// Function to count the number of trees encountered by a specified slope
 int countTrees(const std::vector<std::vector<char>>& map, int deltaHoriz, int deltaVert) {
     int horiz(0), vert(0); // track horizontal and vertical position
     int treeCount; // track number of trees we've encountered
@@ -16,7 +17,7 @@ int countTrees(const std::vector<std::vector<char>>& map, int deltaHoriz, int de
         }
         horiz += deltaHoriz;
         vert += deltaVert;
-        horiz = horiz % map[0].size();
+        horiz = horiz % map[0].size(); // do simple modulus to repeat the pattern
     } while (vert < map.size());
 
     return treeCount;
@@ -31,6 +32,8 @@ int partOne(const std::vector<std::vector<char>>& map) {
 int partTwo(const std::vector<std::vector<char>>& map) {
     auto slopes = std::list<std::pair<int, int>>{{1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2}};
 
+    // for some reason, this is returning an incorrect value. however, manual multiplication of the results is correct.
+    // so, need to investigate this futher...maybe int isn't adequate?
     int result;
     for (auto& i : slopes) {
         result *= countTrees(map, i.first, i.second);
