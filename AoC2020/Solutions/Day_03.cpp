@@ -43,7 +43,7 @@ int partTwo(const std::vector<std::vector<char>>& map) {
 }
 
 int main() {
-    std::ifstream in("../Inputs/DayThree.txt");
+    std::ifstream in("../Inputs/Day_03.txt");
     std::string buf;
     std::vector<std::vector<char>> map;
     while (std::getline(in, buf)) {

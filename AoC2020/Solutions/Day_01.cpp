@@ -48,7 +48,7 @@ int partTwo(const std::vector<int>& vec) {
 
 
 int main() {
-   std::ifstream in("../Inputs/DayOne.txt");
+   std::ifstream in("../Inputs/Day_01.txt");
    std::string buf;
    std::vector<int> vec;
    while (std::getline(in, buf)) {

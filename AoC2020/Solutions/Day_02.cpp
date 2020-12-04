@@ -102,7 +102,7 @@ int partTwo(const std::vector<std::string>& vec) {
 }
 
 int main() {
-    std::ifstream in("../Inputs/DayTwo.txt");
+    std::ifstream in("../Inputs/Day_02.txt");
     std::string buf;
     std::vector<std::string> vec;
     while (std::getline(in, buf)) {
