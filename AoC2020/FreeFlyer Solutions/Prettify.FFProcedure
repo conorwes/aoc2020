@@ -1,0 +1,103 @@
+Define Procedure DrawHeader(ConsoleWindow cw);
+	List<String> art;
+	art.Count = 16;
+	art[0]  = "               *    *  ()   *   *   ";
+	art[1]  = "            *        * /\         * ";
+	art[2]  = "                  *   /i\\    *  *	";
+	art[3]  = "                *     o/\\  *      *";
+	art[4]  = "             *       ///\i\    *	 ";
+	art[5]  = "                 *   /*/o\\  *    * ";
+	art[6]  = "               *    /i//\*\      *	 ";
+	art[7]  = "                    /o/*\\i\   *	 ";
+	art[8]  = "              *    //i//o\\\\     * ";
+	art[9]  = "                * /*////\\\\i\*	 ";
+	art[10] = "             *    //o//i\\*\\\   *	 ";
+	art[11] = "               * /i///*/\\\\\o\   * ";
+	art[12] = "              *    *   ||     *	 ";
+	art[13] = "------------------------------------------------";
+	art[14] = "Merry Christmas 2020!".Pad(2, 48);
+	art[15] = "------------------------------------------------";
+	
+	Variable i;
+	Variable j;
+	String char;
+	
+	For i = 0 to art.Count - 1;
+		If (i != 14);			
+			For j = 0 to art[i].Length - 1;
+				char = art[i].At(j);
+				
+				If (char == "*" or char == "-");
+					cw.CurrentTextColor = ColorTools.LightCyan;
+				ElseIf (char == "(" or char == ")");
+					cw.CurrentTextColor = ColorTools.Yellow;
+				ElseIf (char == "/" or char == "\");
+					cw.CurrentTextColor = ColorTools.Green;
+				ElseIf (char == "i");
+					cw.CurrentTextColor = ColorTools.Magenta;
+				ElseIf (char == "o");
+					cw.CurrentTextColor = ColorTools.Red;
+				ElseIf (char == "|");
+					cw.CurrentTextColor = ColorTools.Brown;
+				Else;
+					cw.CurrentTextColor = ColorTools.Black;
+				End;
+				
+				cw.Write(char);
+				cw.CurrentTextColor = ColorTools.Black;
+			End;
+		Else;
+			cw.CurrentTextColor = ColorTools.White;
+			cw.Write(art[i]);
+		End;
+		cw.Write(@"\n");
+	End;
+	cw.Write(@"\n\n");
+	
+	Console.CurrentTextColor = ColorTools.Lime;
+EndProcedure;
+
+Define Procedure DrawDailyHeader(ConsoleWindow cw, String dayCount);
+	List<String> art;
+	art.Count = 9;
+	art[0] = "				     .,,,,,.";
+	art[1] = "			       ,a@@a,a@@a,";
+	art[2] = "			      ;;@@@@^@@@@;;";
+	art[3] = "			      ;;;;@   @;;;;";
+	art[4] = "			       `;@@;;;@@;'";
+	art[5] = "			        @@'''''@@";
+	art[6] = "------------------------------------------------";
+	art[7] = dayCount.Pad(2, 48);
+	art[8] = "------------------------------------------------";
+	
+	Variable i;
+	Variable j;
+	String char;
+	
+	For i = 0 to art.Count - 1;
+		If (i != 6 and i != 7 and i != 8);
+			For j = 0 to art[i].Length - 1;
+				char = art[i].At(j);
+				
+				If (char == "." or char == "," or char == "^" or char == ";" or char == "'" or char == "`");
+					cw.CurrentTextColor = ColorTools.Green;
+				ElseIf (char == "a" or char == "@");
+					cw.CurrentTextColor = ColorTools.Red;
+				Else;
+					cw.CurrentTextColor = ColorTools.Black;
+				End;
+				
+				cw.Write(char);
+				cw.CurrentTextColor = ColorTools.Black;
+			End;
+			cw.Write(@"\n");
+		Else;
+			cw.CurrentTextColor = ColorTools.White;
+			cw.Write(art[i]);
+			cw.Write(@"\n");
+		End;
+	End;
+	cw.Write(@"\n\n");
+	
+	Console.CurrentTextColor = ColorTools.Lime;
+EndProcedure;

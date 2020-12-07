@@ -1,0 +1,46 @@
+Define Procedure dayOne(Array answers);
+	FileInterface fi;
+	fi.Filename = "./../Inputs/Day_01.txt";
+	fi.ReadMode = 1;
+	fi.Open();
+	
+	Variable i = 0;
+	Array entries;
+	String worker;
+	While(!fi.EOF);
+		worker = fi.GetLine();
+		If (worker != "");
+			entries.Dimension++;
+			entries[i] = worker.ToVariable();
+			i++;
+		End;
+	End;
+	
+	// Part One:
+	Variable j;
+	Variable sum;
+	
+	For i = 0 to entries.Dimension - 1;
+		For j = 0 to entries.Dimension - 1;
+			sum = entries[i] + entries[j];
+			If (sum == 2020);
+				answers[0] = entries[i] * entries[j];
+			End;
+		End;
+	End;
+	
+	// Part Two:
+	Variable k;
+	
+	For i = 0 to entries.Dimension - 1;
+		For j = 0 to entries.Dimension - 1;
+			For k = 0 to entries.Dimension - 1;
+				sum = entries[i] + entries[j] + entries[k];
+				If (sum == 2020);
+					answers[1] = entries[i] * entries[j] * entries[k];
+					
+				End;
+			End;
+		End;
+	End;
+EndProcedure;
