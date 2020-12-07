@@ -63,7 +63,6 @@ public:
 
 private:
     void buildPassport(std::string&& info) {
-        int startPos = 0;
         int length = info.find(" ");
         while (length != std::string::npos) {
             populatePair(info.substr(0, length));
