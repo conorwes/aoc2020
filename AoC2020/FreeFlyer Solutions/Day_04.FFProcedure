@@ -9,7 +9,7 @@ Struct Passport;
 	String cid;
 End;
 
-Define Procedure populatePassport(String info, Passport p, Variable count);
+Define Procedure populatePassport(String info, Passport p);
 	p.byr = -1;
 	p.cid = "null";
 	p.ecl = "null";
@@ -20,13 +20,10 @@ Define Procedure populatePassport(String info, Passport p, Variable count);
 	p.pid = "null";
 	
 	StringArray tokens = info.Split(" ");
-	tokens.SortAscending();
-	count = tokens.Dimension;
 	StringArray pair[2];
 	Variable i;
 	For i = 0 to tokens.Dimension - 1;
 		pair = tokens[i].Split(":");
-		Report tokens[i], pair;
 		If (pair[0] == "byr");
 			p.byr = pair[1].ToVariable();
 		ElseIf (pair[0] == "cid");
@@ -49,26 +46,78 @@ Define Procedure populatePassport(String info, Passport p, Variable count);
 	End;
 EndProcedure;
 
-Define Procedure validatePassport(Passport p, Variable exhaustiveCheck, Variable isValid);
-	isValid = 0;
-	
-	If (!exhaustiveCheck);
-		isValid += p.byr != -1;
-		isValid += p.cid != "null";
-		isValid += p.ecl != "null";
-		isValid += p.eyr != -1;
-		isValid += p.hcl != "null";
-		isValid += p.hgt != "null";
-		isValid += p.iyr != -1;
-		isValid += p.pid != "null";
+Define Procedure validateYear(Variable year, Variable minYear, Variable maxYear, Variable valid);
+	valid = year >= minYear and year <= maxYear;
+EndProcedure;
+
+Define Procedure validateHeight(String height, Variable valid);
+	String unit;
+	Variable value;
+	If (height.Find("cm") != -1 or height.Find("in") != -1);
+		unit = height.SubString(height.Length - 2);
+	    value = height.SubString(0, height.Length - 2).ToVariable();
 		
-		If (isValid != 8);
-			isValid = 0;
+		If (unit == "cm");
+			valid = (value >= 150 and value <= 193);
+		ElseIf (unit == "in");
+			valid = (value >= 59 and value <= 76);
 		Else;
-			isValid = 1;
+			valid = 0;
 		End;
 	Else;
-		// do nothing for now
+		valid = 0;
+	End;
+EndProcedure;
+
+Define Procedure validateHairColor(String hairColor, Variable valid);
+	String value = hairColor.SubString(1);
+	valid = (hairColor.At(0) == "#" and value.Length == 6);
+EndProcedure;
+
+Define Procedure validateEyeColor(String eyeColor, Variable valid);
+	valid = (eyeColor == "amb" or eyeColor == "blu" or eyeColor == "brn" or eyeColor == "gry" or eyeColor == "grn" or eyeColor == "hzl" or eyeColor == "oth");
+EndProcedure;
+
+Define Procedure validatePID(String pid, Variable valid);
+	valid = pid.Length == 9;
+EndProcedure;
+
+Define Procedure validatePassport(Passport p, Variable exhaustiveCheck, Variable isValid);
+	isValid = 0;
+	Variable hasMandatoryFields = (p.byr != -1 and p.ecl != "null" and p.eyr != -1 and p.hcl != "null" and p.hgt != "null" and p.iyr != -1 and p.pid != "null");
+	Variable validValue;
+	
+	If (!exhaustiveCheck);
+		isValid += hasMandatoryFields;
+	Else;
+		Call validateYear(p.byr, 1920, 2002, validValue);
+		isValid += validValue;
+		
+		Call validateYear(p.iyr, 2010, 2020, validValue);
+		isValid += validValue;
+		
+		Call validateYear(p.eyr, 2020, 2030, validValue);
+		isValid += validValue;
+		
+		Call validateHeight(p.hgt, validValue);
+		isValid += validValue;
+		
+		Call validateHairColor(p.hcl, validValue);
+		isValid += validValue;
+		
+		Call validateEyeColor(p.ecl, validValue);
+		isValid += validValue;
+		
+		Call validatePID(p.pid, validValue);
+		isValid += validValue;
+		
+		isValid += hasMandatoryFields;
+		
+		If (isValid == 8);
+			isValid = 1;
+		Else;
+			isValid = 0;
+		End;		
 	End;
 EndProcedure;
 
@@ -94,90 +143,78 @@ Define Procedure dayFour(Array answers);
 		End;
 	End;
 	
+	/* uncomment for debug
 	For i = 0 to inputs.Count - 1;
 		Report inputs[i] to "./../Debug/Day04_FF_Inputs.txt" without headers without pad;
 	End;
 	
 	Variable check;
-	Variable validCheck;
+	Variable validCheck = 0;
+	//				byr cid ecl eyr hcl hgt iyr pid
+	Array checks = { 0,  0,  0,  0,  0,  0,  0,  0};
 	For i = 0 to inputs.Count - 1;
 		check = 0;
+		checks = { 0,  0,  0,  0,  0,  0,  0,  0};
+		
+		Report inputs[i];
 		
 		If (inputs[i].Find("byr") != -1);
+			checks[0] = 1;
 			check++;
 		End;
 		
 		If (inputs[i].Find("cid") != -1);
+			checks[1] = 1;
 			check++;
 		End;
 		
 		If (inputs[i].Find("ecl") != -1);
+			checks[2] = 1;
 			check++;
 		End;
 		
 		If (inputs[i].Find("eyr") != -1);
+			checks[3] = 1;
 			check++;
 		End;
 		
 		If (inputs[i].Find("hcl") != -1);
+			checks[4] = 1;
 			check++;
 		End;
 		
 		If (inputs[i].Find("hgt") != -1);
+			checks[5] = 1;
 			check++;
 		End;
 		
 		If (inputs[i].Find("iyr") != -1);
+			checks[6] = 1;
 			check++;
 		End;
 		
 		If (inputs[i].Find("pid") != -1);
+			checks[7] = 1;
 			check++;
 		End;
+
+		Report check, checks;
 		
-		Report check;
-		
-		If (check == 8);
+		If (check == 7);
 			validCheck++;
 		End;
 	End;
 	
-	Report validCheck;
-	
-	List<StringArray> tokens;
-	For i = 0 to inputs.Count - 1;
-		tokens.Count++;
-		tokens[i] = inputs[i].Split(" ");
-		Report inputs[i], tokens[i], tokens[i].Dimension;
-	End;
-	
-	Report tokens.Count;
-	
-	Variable j;
-	For i = 0 to tokens.Count - 1;
-		Report tokens[i];
-		If (tokens[i].Dimension == 8);
-			j++;
-		End;
-	End;
+	Report validCheck;*/
 
-	Report j;
-	/*Variable count;
-	Variable totalTrue;
 	List<Passport> passports[inputs.Count];
 	For i = 0 to inputs.Count - 1;
-		Call populatePassport(inputs[i], passports[i], count);
-		If (count == 8);
-			totalTrue++;
-		End;
+		Call populatePassport(inputs[i], passports[i]);
 	End;
-	
-	Report totalTrue; // debugging, expect 254
 	
 	// Part one:
 	Variable validCount = 0;
 	Variable isValid;
-	Report passports.Count;
 	For i = 0 to passports.Count - 1;
 		Call validatePassport(passports[i], 0, isValid);
 		If (isValid);
@@ -185,5 +222,16 @@ Define Procedure dayFour(Array answers);
 		End;
 	End;
 	
-	answers[0] = validCount; // expect 254*/
+	answers[0] = validCount; // expect 254
+	
+	// Part two:
+	validCount = 0;
+	For i = 0 to passports.Count - 1;
+		Call validatePassport(passports[i], 1, isValid);
+		If (isValid);
+			validCount++;
+		End;
+	End;
+	
+	answers[1] = validCount;
 EndProcedure;
