@@ -1,0 +1,82 @@
+Struct Info;
+	Variable minBound;
+	Variable maxBound;
+	String keyChar;
+	String password;
+End;
+
+Define Procedure parseInformation(String input, Info info);
+	StringTokenizer tokenizer;
+	tokenizer.AddDelimiter("-");
+	tokenizer.AddDelimiter(": ");
+	tokenizer.StringToParse = input;
+	List<String> tokens = tokenizer.Tokens;
+
+	info.minBound = tokens[0].ToVariable();
+	info.maxBound = tokens[1].ToVariable();
+	info.keyChar = tokens[2];
+	info.password = tokens[3];
+EndProcedure;
+  
+Define Procedure dayTwo(Array answers);
+	FileInterface fi;
+	fi.Filename = "./../Inputs/Day_02.txt";
+	fi.ReadMode = 1;
+	fi.Open();
+	
+	Variable i = 0;
+	List<String> inputs;
+	String worker;
+	While(!fi.EOF);
+		worker = fi.GetLine(@"\n");
+		If (worker != "");
+			inputs.Count++;
+			inputs[i] = worker;
+			i++;
+		End;
+	End;
+
+	List<Info> info;
+	For i = 0 to inputs.Count - 1;
+		info.Count++;
+		Call parseInformation(inputs[i], info[i]);
+	End;
+	
+	// Part one:
+	// Count the number of instances of the key, and determine if it falls in the range
+	Variable charCount;
+	Variable j;
+	Variable validSum;
+	For i = 0 to info.Count - 1;
+		charCount = 0;
+		
+		// Iterate through password
+		For j = 0 to info[i].password.Length - 1;
+			If (info[i].password.At(j) == info[i].keyChar);
+				charCount++;
+			End;
+		End;
+		
+		If (charCount < info[i].minBound or charCount > info[i].maxBound);
+			// invalid, do nothing
+		Else;
+			validSum++;
+		End;
+	End;
+	
+	answers[0] = validSum;
+	
+	// Part two:
+	// Require that the key char is present exactly min or max times
+	validSum = 0;
+	Variable ruleSum = 0;
+	For i = 0 to info.Count - 1;
+		ruleSum = (info[i].password.At(info[i].minBound - 1) == info[i].keyChar) + (info[i].password.At(info[i].maxBound - 1) == info[i].keyChar);
+		If (ruleSum == 1);
+			validSum++;
+		End;
+	End;
+	
+	answers[1] = validSum;
+	
+EndProcedure;

@@ -1,0 +1,53 @@
+Define Procedure countTrees(List<String> inputs, Variable deltaHoriz, Variable deltaVert, Variable treeCount);
+	Variable horiz = 0;
+	Variable vert = 0;
+	treeCount = 0;
+	
+	While (vert < inputs.Count);
+		If (inputs[vert].At(horiz) == "#");
+			treeCount++;
+		End;
+		horiz += deltaHoriz;
+		vert += deltaVert;
+		horiz = horiz % inputs[0].Length;
+	End;
+EndProcedure;
+
+Define Procedure dayThree(Array answers);
+	FileInterface fi;
+	fi.Filename = "./../Inputs/Day_03.txt";
+	fi.ReadMode = 1;
+	fi.Open();
+	
+	Variable i = 0;
+	List<String> inputs;
+	String worker;
+	While(!fi.EOF);
+		worker = fi.GetLine();
+		If (worker != "");
+			inputs.Count++;
+			inputs[i] = worker;
+			i++;
+		End;
+	End;
+	
+	// Part One:
+	Variable treeCount;
+	Call countTrees(inputs, 3, 1, treeCount);
+	
+	answers[0] = treeCount;
+	
+	// Part Two:
+	Matrix slopes = [1, 1; 3, 1; 5, 1; 7, 1; 1, 2];
+	Variable product = 1;
+	
+	For i = 0 to slopes.RowCount - 1;
+		treeCount = 0;
+		Call countTrees(inputs, slopes[i, 0], slopes[i, 1], treeCount);
+		product *= treeCount;
+	End;
+	
+	answers[1] = product;
+EndProcedure;
+
+// To do: add proc to draw map :D

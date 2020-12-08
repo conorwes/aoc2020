@@ -1,0 +1,138 @@
+Struct Passport;
+	Variable byr;
+	Variable iyr;
+	Variable eyr;
+	String hgt;
+	String hcl;
+	String ecl;
+	String pid;
+	String cid;
+End;
+
+Define Procedure populatePassport(String info, Passport p, Variable count);
+	p.byr = -1;
+	p.cid = "null";
+	p.ecl = "null";
+	p.eyr = -1;
+	p.hcl = "null";
+	p.hgt = "null";
+	p.iyr = -1;
+	p.pid = "null";
+	
+	StringArray tokens = info.Split(" ");
+	tokens.SortAscending();
+	count = tokens.Dimension;
+	StringArray pair[2];
+	Variable i;
+	For i = 0 to tokens.Dimension - 1;
+		pair = tokens[i].Split(":");
+		Report tokens[i], pair;
+		If (pair[0] == "byr");
+			p.byr = pair[1].ToVariable();
+		ElseIf (pair[0] == "cid");
+			p.cid = pair[1];
+		ElseIf (pair[0] == "ecl");
+			p.ecl = pair[1];
+		ElseIf (pair[0] == "eyr");
+			p.eyr = pair[1].ToVariable();
+		ElseIf (pair[0] == "hcl");
+			p.hcl = pair[1];
+		ElseIf (pair[0] == "hgt");
+			p.hgt = pair[1];
+		ElseIf (pair[0] == "iyr");
+			p.iyr = pair[1].ToVariable();
+		ElseIf (pair[0] == "pid");
+			p.pid = pair[1];
+		Else;
+			// Do nothing
+		End;
+	End;
+EndProcedure;
+
+Define Procedure validatePassport(Passport p, Variable exhaustiveCheck, Variable isValid);
+	isValid = 0;
+	
+	If (!exhaustiveCheck);
+		isValid += p.byr != -1;
+		isValid += p.cid != "null";
+		isValid += p.ecl != "null";
+		isValid += p.eyr != -1;
+		isValid += p.hcl != "null";
+		isValid += p.hgt != "null";
+		isValid += p.iyr != -1;
+		isValid += p.pid != "null";
+		
+		If (isValid != 8);
+			isValid = 0;
+		Else;
+			isValid = 1;
+		End;
+	Else;
+		// do nothing for now
+	End;
+EndProcedure;
+
+Define Procedure dayFour(Array answers);
+	FileInterface fi;
+	fi.Filename = "./../Inputs/Day_04.txt";
+	fi.ReadMode = 1;
+	fi.Open();
+	
+	Variable i = 0;
+	List<String> inputs;
+	String worker;
+	String buf;
+	While(!fi.EOF);
+		buf = fi.GetLine();
+		If (buf != "");
+			worker += buf + " ";
+		Else;
+			inputs.Count++;
+			inputs[i] = worker;
+			worker = "";
+			i++;
+		End;
+	End;
+	
+	List<StringArray> tokens;
+	For i = 0 to inputs.Count - 1;
+		tokens.Count++;
+		tokens[i] = inputs[i].Split(" ");
+	End;
+	
+	Report tokens.Count;
+	
+	Variable j;
+	For i = 0 to tokens.Count - 1;
+		Report tokens[i];
+		If (tokens[i].Dimension == 8);
+			j++;
+		End;
+	End;
+
+	Report j;
+	/*Variable count;
+	Variable totalTrue;
+	List<Passport> passports[inputs.Count];
+	For i = 0 to inputs.Count - 1;
+		Call populatePassport(inputs[i], passports[i], count);
+		If (count == 8);
+			totalTrue++;
+		End;
+	End;
+	
+	Report totalTrue; // debugging, expect 254
+	
+	// Part one:
+	Variable validCount = 0;
+	Variable isValid;
+	Report passports.Count;
+	For i = 0 to passports.Count - 1;
+		Call validatePassport(passports[i], 0, isValid);
+		If (isValid);
+			validCount++;
+		End;
+	End;
+	
+	answers[0] = validCount; // expect 254*/
+EndProcedure;

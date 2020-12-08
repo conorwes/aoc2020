@@ -87,10 +87,13 @@
     <ProjectExternals>
       <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_01.FFProcedure</ProjectExternal>
       <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Prettify.FFProcedure</ProjectExternal>
+      <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_02.FFProcedure</ProjectExternal>
+      <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_03.FFProcedure</ProjectExternal>
+      <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_04.FFProcedure</ProjectExternal>
     </ProjectExternals>
     <ProjectCommands>
       <FreeForm enabled="true">
-        <Label>FreeForm</Label>
+        <Label>Configuration</Label>
         <Bookmarks />
         <Breakpoints />
         <FreeFormScript><![CDATA[Console.DockMode = 3;
@@ -103,18 +106,96 @@ OutputLayout.ApplyUpdates();
 Console.Dimension = 50;
 Console.Show();
 
-Call DrawHeader(Console);
+// Configuration Variables
+Alias TRUE = 1;
+Alias FALSE = 0;
 
-Call DrawDailyHeader(Console, "Day One");
+Global Constant Variable Prettify 			= FALSE;
+Global Constant Variable DoDayOne 			= FALSE;
+Global Constant Variable DoDayTwo 			= FALSE;
+Global Constant Variable DoDayThree 		= FALSE;
+Global Constant Variable DoDayFour 			= TRUE;
+Global Constant Variable DoDayFive 			= TRUE;
+Global Constant Variable DoDaySix 			= TRUE;
+Global Constant Variable DoDaySeven 		= TRUE;
+Global Constant Variable DoDayEight 		= TRUE;
+Global Constant Variable DoDayNine 			= TRUE;
+Global Constant Variable DoDayTen 			= TRUE;
+Global Constant Variable DoDayEleven 		= TRUE;
+Global Constant Variable DoDayTwelve 		= TRUE;
+Global Constant Variable DoDayThirteen 		= TRUE;
+Global Constant Variable DoDayFourteen 		= TRUE;
+Global Constant Variable DoDayFifteen 		= TRUE;
+Global Constant Variable DoDaySixteen 		= TRUE;
+Global Constant Variable DoDaySeventeen 	= TRUE;
+Global Constant Variable DoDayEighteen 		= TRUE;
+Global Constant Variable DoDayNineteen 		= TRUE;
+Global Constant Variable DoDayTwenty 		= TRUE;
+Global Constant Variable DoDayTwentyOne 	= TRUE;
+Global Constant Variable DoDayTwentyTwo 	= TRUE;
+Global Constant Variable DoDayTwentyThree 	= TRUE;
+Global Constant Variable DoDayTwentyFour 	= TRUE;
+Global Constant Variable DoDayTwentyFive 	= TRUE;
 
-Array answers[2];
+// Other Variables
+Array answers[2];]]></FreeFormScript>
+      </FreeForm>
+      <FreeForm enabled="true">
+        <Label>Driver</Label>
+        <Bookmarks />
+        <Breakpoints />
+        <FreeFormScript><![CDATA[
+If (Prettify);
+	Call DrawHeader(Console);
+End;
 
-Call dayOne(answers);
-Report "Part One: " + answers[0].IFormat("%i") to Console;
-Report "Part Two: " + answers[1].IFormat("%i") to Console;
-Console.Write(@"\n\n");
+If (DoDayOne);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day One");
+	End;
+	
+	Call dayOne(answers);
+	
+	Report "Part One: " + answers[0].ToString() to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;
 
-Call DrawDailyHeader(Console, "Day Two");]]></FreeFormScript>
+If (DoDayTwo);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day Two");
+	End;
+
+	Call dayTwo(answers);
+	
+	Report "Part One: " + answers[0].ToString() to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;
+
+If (DoDayThree);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day Three");
+	End;
+	
+	Call dayThree(answers);
+	
+	Report "Part One: " + answers[0].ToString()to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;
+
+If (DoDayFour);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day Four");
+	End;
+	
+	Call dayFour(answers);
+	
+	Report "Part One: " + answers[0].ToString()to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;]]></FreeFormScript>
       </FreeForm>
     </ProjectCommands>
   </ProjectMissionSequence>
@@ -128,17 +209,90 @@ OutputLayout.ApplyUpdates();
 Console.Dimension = 50;
 Console.Show();
 
-Call DrawHeader(Console);
+// Configuration Variables
+Alias TRUE = 1;
+Alias FALSE = 0;
 
-Call DrawDailyHeader(Console, "Day One");
+Global Constant Variable Prettify 			= FALSE;
+Global Constant Variable DoDayOne 			= FALSE;
+Global Constant Variable DoDayTwo 			= FALSE;
+Global Constant Variable DoDayThree 		= FALSE;
+Global Constant Variable DoDayFour 			= TRUE;
+Global Constant Variable DoDayFive 			= TRUE;
+Global Constant Variable DoDaySix 			= TRUE;
+Global Constant Variable DoDaySeven 		= TRUE;
+Global Constant Variable DoDayEight 		= TRUE;
+Global Constant Variable DoDayNine 			= TRUE;
+Global Constant Variable DoDayTen 			= TRUE;
+Global Constant Variable DoDayEleven 		= TRUE;
+Global Constant Variable DoDayTwelve 		= TRUE;
+Global Constant Variable DoDayThirteen 		= TRUE;
+Global Constant Variable DoDayFourteen 		= TRUE;
+Global Constant Variable DoDayFifteen 		= TRUE;
+Global Constant Variable DoDaySixteen 		= TRUE;
+Global Constant Variable DoDaySeventeen 	= TRUE;
+Global Constant Variable DoDayEighteen 		= TRUE;
+Global Constant Variable DoDayNineteen 		= TRUE;
+Global Constant Variable DoDayTwenty 		= TRUE;
+Global Constant Variable DoDayTwentyOne 	= TRUE;
+Global Constant Variable DoDayTwentyTwo 	= TRUE;
+Global Constant Variable DoDayTwentyThree 	= TRUE;
+Global Constant Variable DoDayTwentyFour 	= TRUE;
+Global Constant Variable DoDayTwentyFive 	= TRUE;
 
+// Other Variables
 Array answers[2];
 
-Call dayOne(answers);
-Report "Part One: " + answers[0].IFormat("%i") to Console;
-Report "Part Two: " + answers[1].IFormat("%i") to Console;
-Console.Write(@"\n\n");
+If (Prettify);
+	Call DrawHeader(Console);
+End;
 
-Call DrawDailyHeader(Console, "Day Two");]]></ProjectScript>
+If (DoDayOne);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day One");
+	End;
+	
+	Call dayOne(answers);
+	
+	Report "Part One: " + answers[0].ToString() to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;
+
+If (DoDayTwo);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day Two");
+	End;
+
+	Call dayTwo(answers);
+	
+	Report "Part One: " + answers[0].ToString() to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;
+
+If (DoDayThree);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day Three");
+	End;
+	
+	Call dayThree(answers);
+	
+	Report "Part One: " + answers[0].ToString()to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;
+
+If (DoDayFour);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day Four");
+	End;
+	
+	Call dayFour(answers);
+	
+	Report "Part One: " + answers[0].ToString()to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;]]></ProjectScript>
   <ProjectNotes></ProjectNotes>
 </FreeFlyerProjectFile>
