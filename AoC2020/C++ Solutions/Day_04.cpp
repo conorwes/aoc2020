@@ -170,6 +170,14 @@ int main() {
         }
     }
     information.emplace_back(std::move(input));
+
+    /* uncomment for parsing debug
+    std::ofstream myFile;
+    myFile.open("../Debug/Day04_Inputs_C++.txt");
+    for (auto& i : information) {
+        myFile << i << std::endl;
+    }
+    myFile.close();*/
     
     // Use those chunks of data to make credentials which we can then operate upon
     std::vector<Passport> passports;

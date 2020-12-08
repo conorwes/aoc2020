@@ -94,10 +94,61 @@ Define Procedure dayFour(Array answers);
 		End;
 	End;
 	
+	For i = 0 to inputs.Count - 1;
+		Report inputs[i] to "./../Debug/Day04_FF_Inputs.txt" without headers without pad;
+	End;
+	
+	Variable check;
+	Variable validCheck;
+	For i = 0 to inputs.Count - 1;
+		check = 0;
+		
+		If (inputs[i].Find("byr") != -1);
+			check++;
+		End;
+		
+		If (inputs[i].Find("cid") != -1);
+			check++;
+		End;
+		
+		If (inputs[i].Find("ecl") != -1);
+			check++;
+		End;
+		
+		If (inputs[i].Find("eyr") != -1);
+			check++;
+		End;
+		
+		If (inputs[i].Find("hcl") != -1);
+			check++;
+		End;
+		
+		If (inputs[i].Find("hgt") != -1);
+			check++;
+		End;
+		
+		If (inputs[i].Find("iyr") != -1);
+			check++;
+		End;
+		
+		If (inputs[i].Find("pid") != -1);
+			check++;
+		End;
+		
+		Report check;
+		
+		If (check == 8);
+			validCheck++;
+		End;
+	End;
+	
+	Report validCheck;
+	
 	List<StringArray> tokens;
 	For i = 0 to inputs.Count - 1;
 		tokens.Count++;
 		tokens[i] = inputs[i].Split(" ");
+		Report inputs[i], tokens[i], tokens[i].Dimension;
 	End;
 	
 	Report tokens.Count;

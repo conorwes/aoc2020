@@ -53,7 +53,7 @@
         <COUpdateInterval units="s" displayed_units="s">0</COUpdateInterval>
         <NPUpdateInterval units="s" displayed_units="s">1800</NPUpdateInterval>
         <IonosphereOptions>
-          <IonosphereOptions name="FF_SolarSystem_|ionoOptions|" isConstant="false" isGlobal="false">
+          <IonosphereOptions name="FF_SolarSystem_|ionoOptions|" isConstant="false" isGlobal="true">
             <Name>FF_SolarSystem_|ionoOptions|</Name>
             <MaximumHeight units="km" displayed_units="km">1000</MaximumHeight>
             <MinimumHeight units="km" displayed_units="km">80</MinimumHeight>
