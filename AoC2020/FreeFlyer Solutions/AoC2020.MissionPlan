@@ -153,7 +153,7 @@ End;
 
 If (DoDayOne);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day One");
+		Call DrawDailyHeader(Console, "Day 1");
 	End;
 	
 	Call dayOne(answers);
@@ -165,7 +165,7 @@ End;
 
 If (DoDayTwo);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day Two");
+		Call DrawDailyHeader(Console, "Day 2");
 	End;
 
 	Call dayTwo(answers);
@@ -177,7 +177,7 @@ End;
 
 If (DoDayThree);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day Three");
+		Call DrawDailyHeader(Console, "Day 3");
 	End;
 	
 	Call dayThree(answers);
@@ -189,7 +189,7 @@ End;
 
 If (DoDayFour);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day Four");
+		Call DrawDailyHeader(Console, "Day 4");
 	End;
 	
 	Call dayFour(answers);
@@ -202,7 +202,7 @@ End;
 
 If (DoDayFive);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day Five");
+		Call DrawDailyHeader(Console, "Day 5");
 	End;
 	
 	Call dayFive(answers);
@@ -215,7 +215,7 @@ End;
 
 If (DoDaySix);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day Six");
+		Call DrawDailyHeader(Console, "Day 6");
 	End;
 	
 	Call daySix(answers);
@@ -277,7 +277,7 @@ End;
 
 If (DoDayOne);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day One");
+		Call DrawDailyHeader(Console, "Day 1");
 	End;
 	
 	Call dayOne(answers);
@@ -289,7 +289,7 @@ End;
 
 If (DoDayTwo);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day Two");
+		Call DrawDailyHeader(Console, "Day 2");
 	End;
 
 	Call dayTwo(answers);
@@ -301,7 +301,7 @@ End;
 
 If (DoDayThree);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day Three");
+		Call DrawDailyHeader(Console, "Day 3");
 	End;
 	
 	Call dayThree(answers);
@@ -313,7 +313,7 @@ End;
 
 If (DoDayFour);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day Four");
+		Call DrawDailyHeader(Console, "Day 4");
 	End;
 	
 	Call dayFour(answers);
@@ -326,7 +326,7 @@ End;
 
 If (DoDayFive);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day Five");
+		Call DrawDailyHeader(Console, "Day 5");
 	End;
 	
 	Call dayFive(answers);
@@ -339,7 +339,7 @@ End;
 
 If (DoDaySix);
 	If (Prettify);
-		Call DrawDailyHeader(Console, "Day Six");
+		Call DrawDailyHeader(Console, "Day 6");
 	End;
 	
 	Call daySix(answers);
