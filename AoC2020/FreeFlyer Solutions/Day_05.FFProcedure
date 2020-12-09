@@ -1,0 +1,110 @@
+Struct BoardingPass;
+	Variable row;
+	Variable column;
+	Variable id;
+End;
+
+Define Procedure performPartition(String c, Array bounds);
+	If (bounds[0] == bounds[1]);
+		// all done!
+	Else;
+		If (c == "F" or c == "L");
+			bounds[0] = floor(bounds[0]);
+			bounds[1] = floor((bounds[0] + bounds[1]) / 2);
+		Else;
+			bounds[0] = ceiling((bounds[0] + bounds[1]) / 2);
+			bounds[1] = ceiling(bounds[1]);
+		End;
+	End;
+EndProcedure;
+
+Define Procedure populateBordingPass(String info, BoardingPass bp);
+	String rowInfo = info.SubString(0, 7);
+	String colInfo = info.SubString(7);
+
+	Array worker = {0, 127};
+	
+	Variable i;
+	
+	For i = 0 to rowInfo.Length - 1;
+		Call performPartition(rowInfo.At(i), worker);
+	End;
+	bp.row = worker[0];
+	
+	worker = {0, 7};
+	
+	For i = 0 to colInfo.Length - 1;
+		Call performPartition(colInfo.At(i), worker);
+	End;
+	bp.column = worker[0];
+	
+	bp.id = bp.row * 8 + bp.column;
+EndProcedure;
+
+Define Procedure dayFive(Array answers);
+	FileInterface fi;
+	fi.Filename = "./../Inputs/Day_05.txt";
+	fi.ReadMode = 1;
+	fi.Open();
+	
+	Variable i = 0;
+	List<String> inputs;
+	String worker;
+	While(!fi.EOF);
+		worker = fi.GetLine(@"\n");
+		If (worker != "");
+			inputs.Count++;
+			inputs[i] = worker;
+			i++;
+		End;
+	End;
+	
+	List<BoardingPass> bps[inputs.Count];
+	For i = 0 to inputs.Count - 1;
+		Call populateBordingPass(inputs[i], bps[i]);
+	End;
+	
+	// Part one:
+	Variable maxID = 0;
+	
+	For i = 0 to bps.Count - 1;
+		If (bps[i].id > maxID);
+			maxID = bps[i].id;
+		End;
+	End;
+	
+	answers[0] = maxID;
+	
+	// Part two:
+	Matrix seats;
+	seats.ColumnCount = 3;
+	Variable id = -999;
+	
+	For i = 0 to bps.Count - 1;
+		seats.RowCount++;
+		seats[i, 0] = bps[i].id;
+		seats[i, 1] = bps[i].row;
+		seats[i, 2] = bps[i].column;
+	End;
+
+	seats.Sort({0}, {1});
+	
+	Variable prevID = -999;
+	Variable currID = -999;
+	Variable nextID = -999;
+	
+	For i = 1 to seats.RowCount - 2;
+		prevID = seats[i - 1, 0];
+		currID = seats[i, 0];
+		nextID = seats[i + 1, 0];
+		
+		If (prevID != currID - 1);
+			id = currID - 1;
+		ElseIf (nextID != currID + 1);
+			id = currID + 1;
+		End;
+	End;
+	
+	answers[1] = id;
+	
+EndProcedure;

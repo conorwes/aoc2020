@@ -89,7 +89,6 @@ int partOne(const std::vector<BoardingPass>& passes) {
 // Part two: a bit more complicated: we need to find my seat
 int partTwo(const std::vector<BoardingPass>& passes) {
     std::map<int, std::pair<int, int>> seats;
-    std::pair<int, std::pair<int, int>> missingSeat;
     int id = -999;
 
     // use a map, and we'll sort on ID

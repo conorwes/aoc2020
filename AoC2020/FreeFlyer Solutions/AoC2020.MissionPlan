@@ -90,6 +90,8 @@
       <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_02.FFProcedure</ProjectExternal>
       <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_03.FFProcedure</ProjectExternal>
       <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_04.FFProcedure</ProjectExternal>
+      <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_05.FFProcedure</ProjectExternal>
+      <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_06.FFProcedure</ProjectExternal>
     </ProjectExternals>
     <ProjectCommands>
       <FreeForm enabled="true">
@@ -195,6 +197,32 @@ If (DoDayFour);
 	Report "Part One: " + answers[0].ToString()to Console;
 	Report "Part Two: " + answers[1].ToString() to Console;
 	Console.Write(@"\n\n");
+End;
+
+
+If (DoDayFive);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day Five");
+	End;
+	
+	Call dayFive(answers);
+	
+	Report "Part One: " + answers[0].ToString()to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;
+
+
+If (DoDaySix);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day Six");
+	End;
+	
+	Call daySix(answers);
+	
+	Report "Part One: " + answers[0].ToString()to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
 End;]]></FreeFormScript>
       </FreeForm>
     </ProjectCommands>
@@ -289,6 +317,32 @@ If (DoDayFour);
 	End;
 	
 	Call dayFour(answers);
+	
+	Report "Part One: " + answers[0].ToString()to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;
+
+
+If (DoDayFive);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day Five");
+	End;
+	
+	Call dayFive(answers);
+	
+	Report "Part One: " + answers[0].ToString()to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;
+
+
+If (DoDaySix);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day Six");
+	End;
+	
+	Call daySix(answers);
 	
 	Report "Part One: " + answers[0].ToString()to Console;
 	Report "Part Two: " + answers[1].ToString() to Console;

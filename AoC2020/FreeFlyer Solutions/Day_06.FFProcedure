@@ -1,0 +1,78 @@
+Define Procedure removeIf(StringArray group, String char, String strToTest);
+	Variable i;
+	Variable isPresent = 1;
+	For i = 1 to group.Dimension - 1;
+		If (group[i].Find(char) != -1);
+			isPresent++;
+		End;
+	End;
+	
+	If (isPresent != group.Dimension);
+		strToTest = strToTest.Replace(char, "");
+	End;
+EndProcedure;
+
+Define Procedure daySix(Array answers);
+	FileInterface fi;
+	fi.Filename = "./../Inputs/Day_06.txt";
+	fi.ReadMode = 1;
+	fi.Open();
+	
+	Variable i = 0;
+	Variable j = 0;
+	String line;
+	List<StringArray> groups;
+	StringArray forms;
+	While(!fi.EOF);
+		line = fi.GetLine();
+		If (line != "");
+			forms.Dimension++;
+			forms[j] = line;
+			j++;
+		Else;
+			groups.Count++;
+			groups[i] = forms;
+			i++;
+			forms.Clear();
+			j = 0;
+		End;
+	End;
+
+	// Part one:
+	Variable sum = 0;
+	String results;
+	Variable k;
+	
+	For i = 0 to groups.Count - 1;
+		For j = 0 to groups[i].Dimension - 1;
+			For k = 0 to groups[i][j].Length - 1;
+				If (results.Find(groups[i][j].At(k)) == -1);
+					results += groups[i][j].At(k);
+				End;
+			End;
+		End;
+		
+		/*Report results, " ", results.Length, " ", sum to "./../Debug/Day06_FF_Inputs.txt" without headers without pad;*/
+		sum += results.Length;
+		results = "";
+	End;
+	
+	answers[0] = sum;
+	
+	// Part two:
+	sum = 0;
+	String seen;
+	
+	For i = 0 to groups.Count - 1;
+		seen = groups[i][0];
+		For j = 1 to groups[i].Dimension - 1;
+			For k = 0 to groups[i][0].Length - 1;
+				Call removeIf(groups[i],  groups[i][0].At(k), seen);
+			End;
+		End;
+		
+		sum += seen.Length;
+	End;
+	
+	answers[1] = sum;
+EndProcedure;

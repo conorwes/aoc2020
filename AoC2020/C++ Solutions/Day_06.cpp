@@ -11,15 +11,24 @@ int partOne(const std::vector<std::vector<std::string>>& groups) {
     int sum = 0;
     std::unordered_set<char> answers;
 
+    /*std::ofstream myFile;
+    myFile.open("../Debug/Day06_C++_Inputs.txt");*/
+
     // We just need to accumulate answers and sum them
     for (auto& group : groups) {
         for (auto& line : group) {
             answers.insert(line.begin(), line.end());
         }
 
+        /*for (auto& c: answers) {
+            myFile << c;
+        }
+        myFile << " " << answers.size() << " " << sum << std::endl;*/
         sum += answers.size();
         answers.clear();
     }
+
+    //myFile.close();
 
     return sum;
 }
