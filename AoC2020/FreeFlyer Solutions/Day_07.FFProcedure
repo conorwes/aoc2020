@@ -1,0 +1,84 @@
+Struct Container;
+	String bagType;
+	StringArray parentBagTypes;
+End;
+
+Struct ChildBag;
+	String bagType;
+	Variable bagCount;
+End;
+
+Struct Containee;
+	String bagType;
+	List<ChildBag> childBags;
+End;
+
+Define Procedure parseRules(StringArray rules, List<Container> contained, List<Containee> contains);
+	Variable i;
+	Variable j;
+	StringArray tokens;
+	StringArray worker;
+	For i = 0 to rules.Dimension - 1;
+		// First, let's process all of our rules and get relevant tokens
+		worker = rules[i].Split({rules[i].Find(" bags contain") + " bags contain".Length, rules[i].Length});
+		worker[0] = worker[0].Split({worker[0].Find( " bags contain")})[0];
+		tokens = worker[1].Split(",.");
+		For j = 0 to tokens.Dimension - 1;
+			If (tokens[j].Find(" bag") != -1);
+				tokens[j] = tokens[j].Split({tokens[j].Find(" bag")})[0];
+			End;
+			
+			If (tokens[j].Find(" no other") != -1);
+				tokens[j] = "NULL";
+			End;
+		End;
+		tokens.PushFront(worker[0]);
+		
+		// tokens[0] == parent type
+		// tokens[1+] == X child type
+		
+		// Now, let's fill in the information
+		contains.Count++;
+		
+		contains[i].bagType = tokens[0];
+		For j = 1 to tokens.Dimension - 1;
+			tokens[j] = tokens[j].Trim;
+			worker = tokens[j].Split({tokens[j].Find(" "), tokens[j].Length});
+			
+			If (worker[0] == "NULL");
+				Continue;
+			Else;
+
+			End;
+		End;
+		
+		worker.Clear();
+	End;
+	
+	
+EndProcedure;
+
+Define Procedure daySeven(Array answers);
+	FileInterface fi;
+	fi.Filename = "./../Inputs/Day_07.txt";
+	fi.ReadMode = 1;
+	fi.Open();
+	
+	StringArray rules;
+	
+	Variable i = 0;
+	String worker;
+	While(!fi.EOF);
+		worker = fi.GetLine();
+		If (worker != "");
+			rules.Dimension++;
+			rules[i] = worker;
+			i++;
+			worker = "";
+		End;
+	End;
+
+	List<Container> contained;
+	List<Containee> contains;
+	Call parseRules(rules, contained, contains);
+EndProcedure;

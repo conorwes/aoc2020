@@ -92,6 +92,7 @@
       <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_04.FFProcedure</ProjectExternal>
       <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_05.FFProcedure</ProjectExternal>
       <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_06.FFProcedure</ProjectExternal>
+      <ProjectExternal included="true" autosave="true" contentType="FreeFlyerScript">.\Day_07.FFProcedure</ProjectExternal>
     </ProjectExternals>
     <ProjectCommands>
       <FreeForm enabled="true">
@@ -112,13 +113,13 @@ Console.Show();
 Alias TRUE = 1;
 Alias FALSE = 0;
 
-Global Constant Variable Prettify 			= TRUE;
-Global Constant Variable DoDayOne 			= TRUE;
-Global Constant Variable DoDayTwo 			= TRUE;
-Global Constant Variable DoDayThree 		= TRUE;
-Global Constant Variable DoDayFour 			= TRUE;
-Global Constant Variable DoDayFive 			= TRUE;
-Global Constant Variable DoDaySix 			= TRUE;
+Global Constant Variable Prettify 			= FALSE;
+Global Constant Variable DoDayOne 			= FALSE;
+Global Constant Variable DoDayTwo 			= FALSE;
+Global Constant Variable DoDayThree 		= FALSE;
+Global Constant Variable DoDayFour 			= FALSE;
+Global Constant Variable DoDayFive 			= FALSE;
+Global Constant Variable DoDaySix 			= FALSE;
 Global Constant Variable DoDaySeven 		= TRUE;
 Global Constant Variable DoDayEight 		= TRUE;
 Global Constant Variable DoDayNine 			= TRUE;
@@ -223,6 +224,18 @@ If (DoDaySix);
 	Report "Part One: " + answers[0].ToString()to Console;
 	Report "Part Two: " + answers[1].ToString() to Console;
 	Console.Write(@"\n\n");
+End;
+
+If (DoDaySeven);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day 7");
+	End;
+	
+	Call daySeven(answers);
+	
+	Report "Part One: " + answers[0].ToString()to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
 End;]]></FreeFormScript>
       </FreeForm>
     </ProjectCommands>
@@ -241,13 +254,13 @@ Console.Show();
 Alias TRUE = 1;
 Alias FALSE = 0;
 
-Global Constant Variable Prettify 			= TRUE;
-Global Constant Variable DoDayOne 			= TRUE;
-Global Constant Variable DoDayTwo 			= TRUE;
-Global Constant Variable DoDayThree 		= TRUE;
-Global Constant Variable DoDayFour 			= TRUE;
-Global Constant Variable DoDayFive 			= TRUE;
-Global Constant Variable DoDaySix 			= TRUE;
+Global Constant Variable Prettify 			= FALSE;
+Global Constant Variable DoDayOne 			= FALSE;
+Global Constant Variable DoDayTwo 			= FALSE;
+Global Constant Variable DoDayThree 		= FALSE;
+Global Constant Variable DoDayFour 			= FALSE;
+Global Constant Variable DoDayFive 			= FALSE;
+Global Constant Variable DoDaySix 			= FALSE;
 Global Constant Variable DoDaySeven 		= TRUE;
 Global Constant Variable DoDayEight 		= TRUE;
 Global Constant Variable DoDayNine 			= TRUE;
@@ -343,6 +356,18 @@ If (DoDaySix);
 	End;
 	
 	Call daySix(answers);
+	
+	Report "Part One: " + answers[0].ToString()to Console;
+	Report "Part Two: " + answers[1].ToString() to Console;
+	Console.Write(@"\n\n");
+End;
+
+If (DoDaySeven);
+	If (Prettify);
+		Call DrawDailyHeader(Console, "Day 7");
+	End;
+	
+	Call daySeven(answers);
 	
 	Report "Part One: " + answers[0].ToString()to Console;
 	Report "Part Two: " + answers[1].ToString() to Console;
