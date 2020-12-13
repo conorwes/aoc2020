@@ -13,11 +13,101 @@ Struct Containee;
 	List<ChildBag> childBags;
 End;
 
-Define Procedure parseRules(StringArray rules, List<Container> contained, List<Containee> contains);
+Define Procedure findInContainers(String sToFind, List<Container> containers, Variable index);
+	index = -1;
+	Variable i;
+	For i = 0 to containers.Count - 1;
+		If (containers[i].bagType == sToFind);
+			index = i;
+		End;
+	End;
+EndProcedure;
+
+Define Procedure findInContainees(String sToFind, List<Containee> containees, Variable index);
+	index = -1;
+	Variable i;
+	For i = 0 to containees.Count - 1;
+		If (containees[i].bagType == sToFind);
+			index = i;
+		End;
+	End;
+EndProcedure;
+
+Define Procedure fillContainers(StringArray tokens, List<Container> contained);
 	Variable i;
 	Variable j;
+	Variable index;
+	StringArray worker;
+	
+	For i = 1 to tokens.Dimension - 1;
+		tokens[i] = tokens[i].Trim;
+		worker = tokens[i].Split({tokens[i].Find(" "), tokens[i].Length});
+		
+		If (worker[0] == "NULL");
+			Continue;
+		Else;
+			Call findInContainers(worker[1].Trim, contained, index);
+			If (index == -1);
+				For j = 0 to contained.Count - 1;
+					If (contained[j].bagType == "");
+						contained[j].bagType = worker[1].Trim;
+						index = j;
+						Break;
+					End;
+				End;
+			End;
+			
+			contained[index].parentBagTypes.Dimension++;
+			contained[index].parentBagTypes[contained[index].parentBagTypes.Dimension - 1] = tokens[0];
+		End;
+	End;
+EndProcedure;
+
+Define Procedure fillContainees(StringArray tokens, List<Containee> contains);
+	Variable i;
+	Variable index;
+	StringArray worker;
+
+	Call findInContainees(tokens[0], contains, index);
+	If (index == -1);
+		For i = 0 to contains.Count - 1;
+			If (contains[i].bagType == "");
+				index = i;
+				Break;
+			End;
+		End;
+	End;	
+	
+	// tokens[0] == parent type
+	// tokens[1+] == X child type
+		
+	contains[index].bagType = tokens[0];
+	For i = 1 to tokens.Dimension - 1;
+		tokens[i] = tokens[i].Trim;
+		worker = tokens[i].Split({tokens[i].Find(" "), tokens[i].Length});
+		
+		If (worker[0] == "NULL");
+			contains[index].childBags.Count++;
+			contains[index].childBags[contains[index].childBags.Count - 1].bagCount = 0;
+			contains[index].childBags[contains[index].childBags.Count - 1].bagType = "NULL";
+		Else;
+			contains[index].childBags.Count++;
+			contains[index].childBags[contains[index].childBags.Count - 1].bagCount = worker[0].ToVariable();
+			contains[index].childBags[contains[index].childBags.Count - 1].bagType = worker[1].Trim;
+		End;
+	End;
+EndProcedure;
+
+Define Procedure parseRules(StringArray rules, List<Container> contained, List<Containee> contains);
+	contains.Count = rules.Dimension;
+	contained.Count = rules.Dimension;
+	
+	Variable i;
+	Variable j;
+	Variable index;
 	StringArray tokens;
 	StringArray worker;
+		
 	For i = 0 to rules.Dimension - 1;
 		// First, let's process all of our rules and get relevant tokens
 		worker = rules[i].Split({rules[i].Find(" bags contain") + " bags contain".Length, rules[i].Length});
@@ -33,29 +123,11 @@ Define Procedure parseRules(StringArray rules, List<Container> contained, List<C
 			End;
 		End;
 		tokens.PushFront(worker[0]);
-		
-		// tokens[0] == parent type
-		// tokens[1+] == X child type
-		
-		// Now, let's fill in the information
-		contains.Count++;
-		
-		contains[i].bagType = tokens[0];
-		For j = 1 to tokens.Dimension - 1;
-			tokens[j] = tokens[j].Trim;
-			worker = tokens[j].Split({tokens[j].Find(" "), tokens[j].Length});
-			
-			If (worker[0] == "NULL");
-				Continue;
-			Else;
 
-			End;
-		End;
-		
-		worker.Clear();
+		// Now, let's fill in the information
+		Call fillContainees(tokens, contains);
+		Call fillContainers(tokens, contained);
 	End;
-	
-	
 EndProcedure;
 
 Define Procedure daySeven(Array answers);
@@ -81,4 +153,28 @@ Define Procedure daySeven(Array answers);
 	List<Container> contained;
 	List<Containee> contains;
 	Call parseRules(rules, contained, contains);
+	
+	// Part one:
+	StringArray bags = {"shiny gold"};
+	StringArray seen;
+	String bagName;
+	Variable j;
+	Variable index;
+	
+	While (bags.Dimension != 0);
+		bagName = bags[0];
+		Call findInContainers(bagName, contained, index);
+		If (index != -1);
+			For i = 0 to contained[index].parentBagTypes.Dimension - 1;
+				If (seen.Find(contained[index].parentBagTypes[i]) == 0);
+					seen.PushBack(contained[index].parentBagTypes[i]);
+					bags.PushBack(contained[index].parentBagTypes[i]);
+				End;
+			End;
+		End;
+		
+		bags.PopFront();
+	End;
+	
+	answers[0] = seen.Dimension;
 EndProcedure;
