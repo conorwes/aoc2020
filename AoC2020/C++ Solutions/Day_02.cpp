@@ -1,9 +1,6 @@
 
 #include <algorithm>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <cstring>
+#include "common.h"
 #include <string>
 #include <tuple>
 

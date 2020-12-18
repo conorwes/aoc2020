@@ -1,8 +1,4 @@
-
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include "common.h"
 
 // Probably overcomplicating things, but i like enums
 enum class Field {

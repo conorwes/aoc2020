@@ -1,8 +1,4 @@
-
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include "common.h"
 #include <deque>
 #include <algorithm>
 

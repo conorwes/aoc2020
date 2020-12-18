@@ -1,8 +1,4 @@
-
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include "common.h"
 #include <unordered_map>
 #include <deque>
 #include <unordered_set>

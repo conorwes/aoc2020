@@ -1,7 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include "common.h"
 #include <algorithm>
 #include <numeric>
 #include <sstream>

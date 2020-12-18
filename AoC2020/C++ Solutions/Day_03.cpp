@@ -1,8 +1,4 @@
-
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include "common.h"
 #include <list>
 
 // Function to count the number of trees encountered by a specified slope

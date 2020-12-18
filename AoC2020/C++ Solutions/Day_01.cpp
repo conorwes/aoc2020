@@ -1,8 +1,4 @@
-
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include "common.h"
 
 // Handy function which accepts a vector of ints of any size and sums members
 int sumN(const std::vector<int>& values)
