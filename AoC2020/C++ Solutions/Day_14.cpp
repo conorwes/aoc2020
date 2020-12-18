@@ -5,6 +5,7 @@ struct mask_t {
     uint64_t ones;
     uint64_t zeroes;
     uint64_t xs;
+    std::string rawString;
 };
 
 struct instruction_t {
@@ -34,15 +35,47 @@ struct computer_t {
                     const auto zeroed = i.value & (~mask.zeroes);
                     const auto masked = zeroed | mask.ones;
                     memory[i.address] = masked;
+                    break;
             }
         }
+    }
+
+    std::vector<uint64_t> decodeAddresses(uint64_t address, const std::string& mask) {
+        std::vector<uint64_t> results{address};
+
+        for (size_t i = 0; i < mask.size(); i++) {
+            auto bit = mask[mask.size() - i - 1];
+            if (bit == 'X') {
+                size_t m = results.size();
+                for (size_t j = 0; j < m; j++) {
+                    auto& current = results[j];
+                    results.push_back(current ^ (1ULL << i));
+                }
+            }
+            else if (bit == '1') {
+                size_t m = results.size();
+                for (size_t j = 0; j < m; j++) {
+                    results[j] |= (1ULL << i);
+                }
+            }
+        }
+
+        return results;
     }
 
     void driverV2(const std::vector<instruction_t>& instructions) {
         // this is going to be tough
         for (auto& i : instructions) {
             switch (i.type) {
-                
+                case instruction_t::Mask:
+                    mask = i.mask;
+                    break;
+
+                case instruction_t::Memory:
+                    for (auto& a : decodeAddresses(i.address, i.mask.rawString)) {
+                        memory[a] = i.value;
+                    }
+                    break;
             }
         }
     }
@@ -82,9 +115,10 @@ int main() {
         switch (line[1]) {
             case 'a': {
                 instruction.type = instruction_t::Mask;
-                auto* const mask_str = line.data() + 7;
+                auto* maskStr = line.data() + 7;
+                instruction.mask.rawString = maskStr;
                 for (int i = 35; i >= 0; i--) {
-                    switch (mask_str[i]) {
+                    switch (maskStr[i]) {
                         case '1':
                             instruction.mask.ones |= 1ull << (35 - i);
                             break;
@@ -95,10 +129,6 @@ int main() {
 
                         case 'X':
                             instruction.mask.xs |= 1ull << (35 - i);
-                            break;
-
-                        default:
-                            // do nothing
                             break;
                     }
                 }
@@ -114,6 +144,6 @@ int main() {
         }
     }
 
-    std::cout << "Part One: " << partOne(std::move(instructions)) << std::endl;
-    //std::cout << "Part Two: " << partTwo(std::move(instructions)) << std::endl;
+    std::cout << "Part One: " << partOne(instructions) << std::endl;
+    std::cout << "Part Two: " << partTwo(instructions) << std::endl;
 }
