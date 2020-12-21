@@ -34,7 +34,7 @@ ll evaluateP1(string exp) {
 }
 
 ll evaluateP2(string exp) {
-    // the strategy here is the same but more nuanced - now we use the multipilicative operator 
+    // the strategy here is the same but more nuanced - now we use the multiplicative operator 
     // in addition to parentheses as our marker for subexpressions
     size_t posClose;
     while ((posClose = exp.find(')')) != string::npos) {
