@@ -4,12 +4,14 @@
 
 #include "common.h"
 #include <algorithm>
-#include <sstream>
 #include <regex>
 #include <map>
 #include <memory>
 
 using namespace std;
+
+// all credit goes to https://github.com/janpipek for this solution
+// I was unable to solve this on my own, and would seek to use this as an example from which to learn
 
 const int recursionLevel = 32;
 
